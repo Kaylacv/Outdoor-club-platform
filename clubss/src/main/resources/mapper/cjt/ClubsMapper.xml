@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjt.mapper.ClubsMapper">
+
+    <select id="getAllList" resultType="com.cjt.entity.Clubs">
+        select * from clubs where clubpass ='通过' order by clubsId desc
+    </select>
+
+    <select id="querybyName" resultType="com.cjt.entity.Clubs">
+        select * from clubs where clubsName like CONCAT('%',#{query},'%') or clubsKind like CONCAT('%',#{query},'%')
+    </select>
+
+    <select id="queryId" resultType="Integer">
+        select clubsId from clubs where clubsName = #{clubName}
+     </select>
+
+    <select id="page" resultType="com.cjt.entity.Clubs">
+        SELECT * FROM clubs where clubpass='通过' order by clubsId desc
+    </select>
+
+    <insert id="addClub">
+        insert clubs(clubsName,clubsKind,clubDecs,clubAddress,clubPic,clubTime,enabled,clubpass,license) values (#{clubsName},#{clubsKind},#{clubDecs},#{clubAddress},#{clubPic},NOW(),1,'未审核',#{license})
+    </insert>
+
+    <select id="menpage" resultType="com.cjt.entity.Clubs">
+        SELECT * FROM clubs where userName = #{userName} and
+    </select>
+
+    <update id="updateStatus">
+        update clubs set enabled=#{enabled} where clubsId =#{clubsId}
+    </update>
+</mapper>

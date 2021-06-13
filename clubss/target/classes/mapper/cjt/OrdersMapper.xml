@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjt.mapper.OrdersMapper">
+    <select id="managerGet" resultType="com.cjt.entity.Orders">
+        select * from orders o,goods g,users u where o.clubId = 0 and g.goodId=o.goodId and u.userId = o.userId ORDER BY orderId DESC
+    </select>
+
+    <select id="page" resultType="com.cjt.entity.Orders">
+          select * from orders o,goods g,users u where o.clubId = 0 and g.goodId=o.goodId and u.userId = o.userId ORDER BY orderId DESC
+    </select>
+
+    <select id="queryName" resultType="com.cjt.entity.Orders">
+        select * from orders o,goods g,users u where o.clubId = 0 and g.goodId=o.goodId and u.userId = o.userId and u.userName like CONCAT('%',#{userName},'%')
+    </select>
+
+    <select id="userpage" resultType="com.cjt.entity.Orders">
+          select * from orders o,goods g,users u where o.clubId = 0 and g.goodId=o.goodId and u.userId = o.userId and o.userId=#{userId}    ORDER BY o.orderId DESC
+    </select>
+
+    <select id="echart" resultType="String">
+     select  SUM(saleprice)   from  drugsale  where   year(saleTime)=#{year}   group by  year(saleTime), month(saleTime) order By month(saleTime) asc
+    </select>
+</mapper>

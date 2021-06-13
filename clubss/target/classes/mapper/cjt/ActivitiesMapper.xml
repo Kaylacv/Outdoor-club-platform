@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjt.mapper.ActivitiesMapper">
+
+    <select id="clubGet" resultType="com.cjt.entity.Activities">
+        select * from activities a,clubs c where a.clubId = #{clubId} and a.checking='通过' and a.clubId =c.clubsId ORDER BY a.activityId DESC
+    </select>
+
+    <select id="managerGet" resultType="com.cjt.entity.Activities">
+        select * from activities a,clubs c where  a.clubId=c.clubsId  and a.clubId=#{clubId} ORDER BY activityId DESC
+    </select>
+
+    <insert id="insertAct">
+        insert activities(activityTitle,activityCon,activityDecs,upTime,startTime,endTime,actPrice,clubId,checking) values (#{activityTitle},#{activityCon},#{activityDecs},NOW(),#{startTime},#{endTime},#{actPrice},#{clubId},'未审核')
+    </insert>
+
+    <select id="page" resultType="com.cjt.entity.Activities">
+       select * from activities a,clubs c where a.clubId=c.clubsId  ORDER BY activityId DESC
+    </select>
+
+    <select id="query" resultType="com.cjt.entity.Activities">
+        select * from activities a,clubs c where a.clubId=c.clubsId and a.activityId =#{activityId} ORDER BY activityId DESC
+    </select>
+
+    <select id="search" resultType="com.cjt.entity.Activities">
+        select * from activities  where  clubId=#{clubsId} and activityTitle like CONCAT('%',#{activityTitle},'%') ORDER BY activityId DESC
+    </select>
+</mapper>

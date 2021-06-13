@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjt.mapper.ReservesMapper">
+
+    <select id="managerGet" resultType="com.cjt.entity.Reserves">
+        select * from reserves r,clubs c,activities a,users u where r.clubId=#{clubId} and c.clubsId=r.clubId and u.userId = r.userId
+        <if test="activityId !=null"> and r.activityId =a.activityId</if>
+    </select>
+
+    <select id="managerPlace" resultType="com.cjt.entity.Reserves">
+        select * from reserves r,clubs c,places p,users u where r.clubId=#{clubId} and c.clubsId=r.clubId and u.userId = r.userId
+        <if test="placeId !=null"> and r.placeId =p.placeId</if>
+    </select>
+
+    <select id="actOrder" resultType="com.cjt.entity.Reserves">
+        select * from reserves r,clubs c,activities a,users u where r.clubId=#{clubId} and c.clubsId=r.clubId and u.userId = r.userId and  usestatus ='已使用'
+        <if test="activityId !=null"> and r.activityId =a.activityId</if>
+    </select>
+
+    <select id="placeOrder" resultType="com.cjt.entity.Reserves">
+        select * from reserves r,clubs c,places p,users u where r.clubId=#{clubId} and c.clubsId=r.clubId and u.userId = r.userId and  usestatus ='已使用'
+        <if test="placeId !=null"> and r.placeId =p.placeId</if>
+    </select>
+
+    <insert id="addReserve">
+        insert reserves(userName,reserveDate,activityId,placeId,userPay,payTime,clubId,usestatus) values (#{userName},#{reserveDate},#{activityId},#{placeId},'已支付',NOW(),#{clubId},'未使用')
+    </insert>
+</mapper>

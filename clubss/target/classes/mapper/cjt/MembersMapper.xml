@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjt.mapper.MembersMapper">
+
+    <select id="roleById" resultType="String">
+        select clubsName from members m,users u,clubs c where m.userId = #{userId} and m.clubId = c.clubsId and u.userId =m.userId
+    </select>
+
+    <select id="ifjoin" resultType="com.cjt.entity.Members">
+        select * from members where userName=#{userName} and clubsName=#{clubsName}
+    </select>
+
+    <select id="queryByclubId" resultType="com.cjt.entity.Members">
+        select * from members m,users u,clubs c  where m.clubId = #{clubsId} and u.userId= m.userId and c.clubsId =m.clubId
+    </select>
+
+    <select id="page" resultType="com.cjt.entity.Members">
+          select * from members m,clubs c where  m.userName=#{userName} and m.clubsName = c.clubsName  and  m.roles ='创始人' and c.clubpass='通过' ORDER BY m.memberId DESC
+    </select>
+
+    <select id="clubpage" resultType="com.cjt.entity.Members">
+          select * from members  where  clubsName=#{clubsName}   ORDER BY  memberId DESC
+    </select>
+
+    <insert id="add">
+        insert members(userName,clubsName,roles) values (#{userName},#{clubName},'创始人')
+    </insert>
+
+    <insert id="join">
+        insert members(userName,clubsName,roles) values (#{userName},#{clubsName},'成员')
+    </insert>
+
+    <select id="mempage" resultType="com.cjt.entity.Members">
+        select * from members m,clubs c where  m.userName=#{userName} and m.clubsName = c.clubsName  and  m.roles ='成员' ORDER BY m.memberId DESC
+    </select>
+
+    <select id="search" resultType="com.cjt.entity.Members">
+        select * from members  where ClubsName=#{ClubsName} and userName =#{userName} ORDER BY memberId DESC
+    </select>
+</mapper>
